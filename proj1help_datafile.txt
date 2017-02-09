@@ -1,0 +1,5 @@
+1,bipin,xyz,27,Male,Professor,10000,true
+2,hitesh,xyz,27,Male,Accountant,10000,false
+3,ritesh,xyz,27,Male,HOD,20000,true
+4,mitesh,xyz,27,Male,Clerk,2000,true
+5,jitesh,xyz,27,Male,DBA,5000,true6,8,2367 Earl WIlliams Rd,21,M,Boss,40,000,true
