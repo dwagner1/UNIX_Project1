@@ -5,9 +5,7 @@ findRecord() {
 }
 
 addRecord() {
-	#echo "addRecord() not implemented..."
-	clear
-
+	
 	echo "Enter name: "
 	read name
 
