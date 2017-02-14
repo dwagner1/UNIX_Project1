@@ -3,7 +3,7 @@ AutoNumber()
 {
             local eno=0     
             f=0
-            for j in `cat proj1help_datafile.txt`
+            for j in `cat database.txt`
             do
                         eno=$(echo "$j" | cut -d "," -f 1)
                         f=1
@@ -46,7 +46,7 @@ Insert()
             read ebal
 
            
-            echo "$eno,$enm,$eadd,$eage,$egen,$edes,$ebal,true" >> proj1help_datafile.txt
+            echo "$eno,$enm,$eadd,$eage,$egen,$edes,$ebal,true" >> database.txt
 
             echo "                 Insert Sucessfully                           "
 
@@ -61,7 +61,7 @@ Display()
             echo "__________________________________________________"                       
             echo "#ENO \t ENAME \t\t EADDR \t\t\t EAGE \t EGEN \t EDES \t\t EBAL"    
         
-            for j in `cat proj1help_datafile.txt`
+            for j in `cat database.txt`
             do
                         eno=$(echo "$j" | cut -d "," -f 1)
                         enm=$(echo "$j" | cut -d "," -f 2)
@@ -92,7 +92,7 @@ Search()
             echo "                 Employee Details                       "
             echo "__________________________________________________"                       
             flag=0
-            for j in `cat proj1help_datafile.txt`
+            for j in `cat database.txt`
             do
                         eno=$(echo "$j" | cut -d "," -f 1)
                         enm=$(echo "$j" | cut -d "," -f 2)
@@ -133,7 +133,7 @@ Delete()
             echo "Enter Employee NO: \c"
             read no
 
-            for j in `cat proj1help_datafile.txt`
+            for j in `cat database.txt`
             do
                         eno=$(echo "$j" | cut -d "," -f 1)
                         enm=$(echo "$j" | cut -d "," -f 2)
@@ -147,9 +147,9 @@ Delete()
                         then
                                     f=1                              
                                     line=$(echo "$eno,$enm,$eadd,$eage,$egen,$edes,$ebal,false")
-                                    fnm=`cat proj1help_datafile.txt`
+                                    fnm=`cat database.txt`
                                     d=$(echo "$fnm" | sed s/$j/$line/g )
-                                    echo $d > proj1help_datafile.txt          
+                                    echo $d > database.txt          
                                     echo "                 Delete Successfully                           "
                         fi
             done
@@ -168,7 +168,7 @@ Update()
 
 
                        
-            for j in `cat proj1help_datafile.txt`
+            for j in `cat database.txt`
             do
                                                 eno=$(echo "$j" | cut -d "," -f 1)
                         enm=$(echo "$j" | cut -d "," -f 2)
@@ -206,9 +206,9 @@ Update()
                                     line=$(echo "$eno,$enm,$eadd,$eage,$egen,$edes,$ebal,true")
 
                                     #line=$(echo "$eno,$snm,$m1,$m2,$m3,$total,$per,true")
-                                    fnm=`cat proj1help_datafile.txt`
+                                    fnm=`cat database.txt`
                                     d=$(echo "$fnm" | sed s/$j/$line/g )
-                                    echo $d > proj1help_datafile.txt          
+                                    echo $d > database.txt          
                                    
                                     echo "                 Update Sucessfully                           "
 

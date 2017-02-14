@@ -1,9 +1,9 @@
 #! /bin/bash
 
 echo " "
-echo "-------- Welcome --------"
+echo "Welcome to my contact database, please select the in the following menu: "
 echo ""
-echo "Please note: your program MUST be compiled with -g flag"
+#echo "Please note: your program MUST be compiled with -g flag"
 
 while :
 do
