@@ -1,2 +1,7 @@
-Name,Address,Phone,Email
-
+Name:Address:Phone:Email
+Qijun Gu:209E Comal:2453518:qijun@txstate.edu
+Apan Qasem:Comal 307A:1111111:aq10@txstate.edu
+Eric:889 RoadName:9999999:eric@hotmail.com
+Bob:123 A Street:7654321:bob@yahoo.com
+Mary:Bstreet:7777777:1email@hotmail.com
+NewName:NewAddress:1231234:newEmail@gmail.com

@@ -1,5 +1,7 @@
 #! /bin/bash
 
+DATABASEFILE="database.txt"
+
 findRecord() {
 	echo "findRecord() not implemented..."
 }
@@ -18,36 +20,130 @@ addRecord() {
 	echo "Enter email: "
 	read email
 
-	echo "$name,$address,$phone,$email" >> database.txt
+	echo "$name:$address:$phone:$email" >> $DATABASEFILE
 
 	echo " --- Insert successful --- "
 }
 
 updateRecord() {
-	echo "updateRecord() not implemented..."
+        SEARCH=' '
+	echo "Enter the record you would like to update: "
+	read -r record
+	numFound=0
+	while [ ! ${numFound} -eq 1 ] ; do	
+		#find the number of search results
+		numFound=$(grep -ci "${record}" ${DATABASEFILE})
 
+		#if multiple matches were found
+		if [ ${numFound} -gt 1 ]; then
+			grep -i "${record}" ${DATABASEFILE}
+			echo ''
+			echo "Error: Found multiple records. Cannot update."
+                        echo "Try again with a more specific search."
+			numFound=1
+
+		#no matches found
+		elif [ ${numFound} -eq 0 ]; then
+			echo ''
+			echo "Error: Record Not Found!"
+			numFound=1
+		else 
+			#get line to be updated
+			LINE=$(grep -in "${record}" ${DATABASEFILE})
+			echo $LINE
+			#split into fields using set
+			IFS=':'
+			set $LINE
+                        lineno=$1
+			name=$2
+			address=$3
+			phone=$4
+			email=$5
+
+		while [ ! "$INPUT" = "5" ] ; do
+		echo ''
+		echo "Which field would you like to update: "
+		echo "1. Name"
+		echo "2. Address"
+		echo "3. Phone"
+		echo "4. Email"
+                echo "5. Done"
+		read -r INPUT
+
+		case "$INPUT" in
+			"1" )
+				echo "Enter new name:"
+			read -r name
+				;;
+			"2" )
+				echo "Enter new address:"
+				read -r address
+				;;
+			"3" )
+				echo "Enter new phone:"
+				read -r phone
+				;;
+			"4" )
+				echo "Enter new email:"
+				read -r email
+				;;
+			"5" )
+				INPUT="5"
+				;;
+			* )
+				echo "Invalid Input"
+		esac
+        	done
+		INPUT=' '
+
+		#Delete the original entry
+		grep -v "${record}" ${DATABASEFILE} > temp && mv temp ${DATABASEFILE}
+
+		#adds the updated entry to end of file
+		echo "$name:$address:$phone:$email" >> ${DATABASEFILE}
+		echo ''
+		echo " --- Record has been updated! --- "
+		numFound=1
+	fi
+	done
 }
 
 removeRecord() {
-	echo "removeRecord() not implemented..."
-
+    echo "Enter the name of the record to be removed: "
+    read -r remove
+    #find matched line to be removed
+    LINE=$(grep -inm 1 -e "${remove}" ${DATABASEFILE})
+    if [ "$LINE" != "" ]; then
+        numRecords=$(grep -ci "${remove}" ${DATABASEFILE})
+    fi
+    if [ $numRecords ] && [ $numRecords -gt 1 ]; then
+        echo "Error: Found multiple records, nothing removed."
+        grep -i "${remove}" ${DATABASEFILE}
+        numRecords=''
+    elif [ "$LINE" != "" ]; then
+        echo "The following record has been deleted: "
+        grep -i "${remove}" ${DATABASEFILE}
+   	#delete line from the file
+        grep -v "${remove}" ${DATABASEFILE} > temp && mv temp ${DATABASEFILE}
+        echo " "
+    else
+        echo "The record cannot be found."
+    fi
 }
 
 displayData() {
-	echo "displayData() not implemented..."
-
+        echo " "
+	cat ${DATABASEFILE}
+	echo " "
 }
 
 
 echo " "
-echo "Welcome to my contact database, please select the in the following menu: "
-echo ""
-#echo "Please note: your program MUST be compiled with -g flag"
-
+echo "Welcome to my contact database, please select from the following menu: "
 while :
 do
 echo ""
-echo "Select fromt the options below..."
+echo "Select from the options below..."
 echo "(a) Find a record"
 echo "(b) Add a new record"
 echo "(c) Update a record"
