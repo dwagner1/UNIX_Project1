@@ -3,19 +3,89 @@
 DATABASEFILE="database.txt"
 
 findRecord() {
-	# echo "findRecord() not implemented..."
-	# echo "How would you like to search? "
-	# echo "a) Name"
-	# echo "b) Address"
-	# echo "c) Phone"
-	# echo "d) Email"
-	# read ch
+    
+    valid=0
+    while [ $valid = 0 ];
+    do
+        valid=1
+        echo "How would you like to search? "
+        echo "a) Name"
+        echo "b) Address"
+        echo "c) Phone"
+        echo "d) Email"
+        echo "e) Cancel"
+        read -r ch
+        echo ''
+        # case statement
 
-	# case statement
+        case ${ch} in
+        a)
+            echo "Enter Name:"
+            read query
+            ;;
+        b)
+            echo "Enter Address:"
+            read query
+            ;;
+        c)
+            echo "Enter Phone:"
+            read query
+            ;;
+        d)
+            echo "Enter Email"
+            read query
+            ;;
+        e)
+            echo "Search Cancelled"
+            return 0
+            ;;
+        *) 
+            valid=0
+            echo "Invalid Option"
+            ;;
+        esac
 
-	for line in 'cat database.txt'; do
-		#statements
-	done
+    done
+    #im not sure if storing old IFS is necessary
+    echo ''
+
+   # for line in `cat ${DATABASEFILE}`; do
+        #set line to $1 - $4
+   #     oldIFS=$IFS
+   #     IFS=":"
+   #     echo "SET IFS TO ["$IFS"]"
+
+   #    set $line 
+
+
+   #     echo $#
+   #     #hacky eval to obtain $1 - $4 based on user input
+   #     eval field=\$${ch} 
+
+        #we found a matching query
+   #     if [ "$field" = $query ]; then
+   #         echo "found one"
+   #         var=1
+   #     fi
+        #set IFS back to original state
+   #     IFS=$oldIFS
+   # done
+
+    var=0
+    for line in `cat ${DATABASEFILE}`; do
+        a=$(echo "$line" | cut -d ":" -f 1)
+        b=$(echo "$line" | cut -d ":" -f 2)
+        c=$(echo "$line" | cut -d ":" -f 3)
+        d=$(echo "$line" | cut -d ":" -f 4)
+
+        #this is really hacky but i didn't want to write another switch
+        eval field=\$${ch}
+
+        if [ "$field" = "$query" ]; then
+            echo "found one"
+            var=1
+        fi
+    done 
 
 	# echo "Enter name : "
 	# read name
@@ -68,7 +138,16 @@ addRecord() {
 	echo "Enter email: "
 	read email
 
-	echo "$name:$address:$phone:$email" >> $DATABASEFILE
+    record=${name}${address}${phone}${email} 
+
+    if echo ${record} | grep -s ":"; then
+        echo "Invalid Record"
+        return 1
+    fi
+
+    record="${name}:${address}:${phone}:${email}"
+
+	echo "${record}" >> $DATABASEFILE
 
 	echo " --- Insert successful --- "
 }
@@ -115,13 +194,13 @@ updateRecord() {
 		echo "2. Address"
 		echo "3. Phone"
 		echo "4. Email"
-                echo "5. Done"
+        echo "5. Done"
 		read -r INPUT
 
 		case "$INPUT" in
 			"1" )
 				echo "Enter new name:"
-			read -r name
+                read -r name
 				;;
 			"2" )
 				echo "Enter new address:"
