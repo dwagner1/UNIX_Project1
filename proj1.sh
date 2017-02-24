@@ -7,10 +7,11 @@ findRecord() {
 	echo "Enter the data to search for:"
 	read searchData
 	printf "%-20s%-20s%-20s%-20s\n" "Name" "Address" "Phone" "Email"
-	while IFS='' read -r line || [[ -n "$line" ]]; do
+	while IFS= read -r line || [[ -n "$line" ]]; do
 		if echo $line | grep -iq "$searchData"; then
-			sentence=$line
-			for w in $sentence
+            IFS=":"
+            set -- $line
+			for w in $@
 			do
 				printf "%-20s" $w
 			done
@@ -47,23 +48,6 @@ findRecord() {
         #set IFS back to original state
    #     IFS=$oldIFS
    # done
-
-    var=0
-    for line in `cat ${DATABASEFILE}`; do
-        a=$(echo "$line" | cut -d ":" -f 1)
-        b=$(echo "$line" | cut -d ":" -f 2)
-        c=$(echo "$line" | cut -d ":" -f 3)
-        d=$(echo "$line" | cut -d ":" -f 4)
-
-        #this is really hacky but i didn't want to write another switch
-        eval field=\$${ch}
-
-        if [ "$field" = "$query" ]; then
-            echo "found one"
-            var=1
-        fi
-    done 
-
 	# echo "Enter name : "
 	# read name
 
