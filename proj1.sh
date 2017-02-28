@@ -3,7 +3,55 @@
 DATABASEFILE="database.txt"
 
 findRecord() {
-	echo "findRecord() not implemented..."
+	# echo "findRecord() not implemented..."
+	# echo "How would you like to search? "
+	# echo "a) Name"
+	# echo "b) Address"
+	# echo "c) Phone"
+	# echo "d) Email"
+	# read ch
+
+	# case statement
+
+	for line in 'cat database.txt'; do
+		#statements
+	done
+
+	# echo "Enter name : "
+	# read name
+
+	# flag=0
+	# file="./database.txt"
+	# while [[ $flag=0 ]] && read -r line
+	# do
+	# 	dname=$(echo "$line" | cut -d "," -f 1)
+	# 	daddress=$(echo "$line" | cut -d "," -f 2)
+	# 	dphone=$(echo "$line" | cut -d "," -f 3)
+	# 	demail=$(echo "$line" | cut -d "," -f 4)
+
+	# 	# Test file input
+	# 	echo "$dname"
+	# 	echo "$daddress"
+	# 	echo "$dphone"
+	# 	echo "$demail"
+
+	# 	$flag=1
+
+	# 	# if [[ $name -eq $dname ]]; then
+	# 	# 	flag=1
+	# 	# 	echo "----- MATCH FOUND -----"
+	# 	# 	echo "Name: $dname"
+	# 	# 	echo "Address: $daddress"
+	# 	# 	echo "Phone: $dphone"
+	# 	# 	echo "Email: $demail"
+	# 	# fi
+
+	# done <"$file"
+
+	# if [[ $flag=0 ]]; then
+	# 	echo "--- NO MATCH FOUND ---"
+	# fi
+
 }
 
 addRecord() {

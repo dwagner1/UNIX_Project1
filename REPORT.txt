@@ -1,0 +1,18 @@
+REPORT
+
+SECTION I (INTRODUCTION):
+To be filled in. Dylan will write the intro closer to the due date.
+
+SECTION II (TASK I):
+Describe design of database and text file. List all fields and explain meaning of each field. Show a test-based database file with at least four records
+
+Section III (TASK II):
+Describe your design of function and interface. List and explain all functions in your database management. Use screenshots to describe an operation of update an existing record step by step.
+Write up and send screenshots to Dylan - he will put in place.
+
+Section IV (TASK III):
+Please copy and past the code for finding a record. Please explain this piece of code line by line.
+Use screenshots to illustrate the following scenarios with queries and results.
+1) Find an exactly matching record for a query.
+2) Find multiple matching records for a query.
+3) Find nothing for a query.
