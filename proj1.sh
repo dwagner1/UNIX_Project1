@@ -14,8 +14,6 @@ findRecord() {
 				printf "%-20s" $w
 			done
 			printf "\n"
-		else
-        		echo "The record cannot be found."
     		fi
 	done < database.txt
                 				
