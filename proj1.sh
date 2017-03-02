@@ -3,49 +3,23 @@
 DATABASEFILE="database.txt"
 
 findRecord() {
+	echo "Enter the name to search:"
+	read name
+	printf "%-20s%-20s%-20s%-20s\n" "Name" "Address" "Phone" "Email"
+	while IFS='' read -r line || [[ -n "$line" ]]; do
+		if echo $line | grep -iq "$name"; then
+			sentence=$line
+			for w in $sentence
+			do
+				printf "%-20s" $w
+			done
+			printf "\n"
+		else
+        		echo "The record cannot be found."
+    		fi
+	done < database.txt
+                				
     
-    valid=0
-    while [ $valid = 0 ];
-    do
-        valid=1
-        echo "How would you like to search? "
-        echo "a) Name"
-        echo "b) Address"
-        echo "c) Phone"
-        echo "d) Email"
-        echo "e) Cancel"
-        read -r ch
-        echo ''
-        # case statement
-
-        case ${ch} in
-        a)
-            echo "Enter Name:"
-            read query
-            ;;
-        b)
-            echo "Enter Address:"
-            read query
-            ;;
-        c)
-            echo "Enter Phone:"
-            read query
-            ;;
-        d)
-            echo "Enter Email"
-            read query
-            ;;
-        e)
-            echo "Search Cancelled"
-            return 0
-            ;;
-        *) 
-            valid=0
-            echo "Invalid Option"
-            ;;
-        esac
-
-    done
     #im not sure if storing old IFS is necessary
     echo ''
 
@@ -174,7 +148,8 @@ updateRecord() {
 			echo ''
 			echo "Error: Record Not Found!"
 			numFound=1
-		else 
+		
+		
 			#get line to be updated
 			LINE=$(grep -in "${record}" ${DATABASEFILE})
 			echo $LINE
