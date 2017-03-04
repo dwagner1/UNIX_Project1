@@ -113,7 +113,7 @@ addRecord() {
     record=${name}${address}${phone}${email} 
 
     if echo ${record} | grep -s ":"; then
-        echo "Invalid Record"
+        echo "Invalid Record. Character "'":"'" not allowed in any record."
         return 1
     fi
 
@@ -232,7 +232,7 @@ removeRecord() {
 }
 
 displayData() {
-        echo " "
+    echo " "
 	cat ${DATABASEFILE}
 	echo " "
 }
