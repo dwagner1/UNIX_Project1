@@ -3,19 +3,24 @@
 DATABASEFILE="database.txt"
 
 findRecord() {
-	echo "Enter the name to search:"
-	read name
+#	found=0
+	echo "Enter the data to search for:"
+	read searchData
 	printf "%-20s%-20s%-20s%-20s\n" "Name" "Address" "Phone" "Email"
 	while IFS='' read -r line || [[ -n "$line" ]]; do
-		if echo $line | grep -iq "$name"; then
+		if echo $line | grep -iq "$searchData"; then
 			sentence=$line
 			for w in $sentence
 			do
 				printf "%-20s" $w
 			done
+#			found=1
 			printf "\n"
-    		fi
+    	fi
 	done < database.txt
+#	if [[ ${found} -eq 0 ]]; then
+#		echo "Record not found."
+#	fi
                 				
     
     #im not sure if storing old IFS is necessary
