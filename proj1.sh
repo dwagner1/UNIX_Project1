@@ -3,7 +3,6 @@
 DATABASEFILE="database.txt"
 
 findRecord() {
-#	found=0
 	echo "Enter the data to search for:"
 	read searchData
 	printf "%-20s%-20s%-20s%-20s\n" "Name" "Address" "Phone" "Email"
@@ -15,75 +14,14 @@ findRecord() {
 			do
 				printf "%-20s" $w
 			done
-#			found=1
 			printf "\n"
     	fi
-	done < database.txt
-#	if [[ ${found} -eq 0 ]]; then
-#		echo "Record not found."
-#	fi
-                				
+	done < database.txt         				
     
-    #im not sure if storing old IFS is necessary
     echo ''
-
-   # for line in `cat ${DATABASEFILE}`; do
-        #set line to $1 - $4
-   #     oldIFS=$IFS
-   #     IFS=":"
-   #     echo "SET IFS TO ["$IFS"]"
-
-   #    set $line 
-
-
-   #     echo $#
-   #     #hacky eval to obtain $1 - $4 based on user input
-   #     eval field=\$${ch} 
-
-        #we found a matching query
-   #     if [ "$field" = $query ]; then
-   #         echo "found one"
-   #         var=1
-   #     fi
-        #set IFS back to original state
-   #     IFS=$oldIFS
-   # done
-	# echo "Enter name : "
-	# read name
-
-	# flag=0
-	# file="./database.txt"
-	# while [[ $flag=0 ]] && read -r line
-	# do
-	# 	dname=$(echo "$line" | cut -d "," -f 1)
-	# 	daddress=$(echo "$line" | cut -d "," -f 2)
-	# 	dphone=$(echo "$line" | cut -d "," -f 3)
-	# 	demail=$(echo "$line" | cut -d "," -f 4)
-
-	# 	# Test file input
-	# 	echo "$dname"
-	# 	echo "$daddress"
-	# 	echo "$dphone"
-	# 	echo "$demail"
-
-	# 	$flag=1
-
-	# 	# if [[ $name -eq $dname ]]; then
-	# 	# 	flag=1
-	# 	# 	echo "----- MATCH FOUND -----"
-	# 	# 	echo "Name: $dname"
-	# 	# 	echo "Address: $daddress"
-	# 	# 	echo "Phone: $dphone"
-	# 	# 	echo "Email: $demail"
-	# 	# fi
-
-	# done <"$file"
-
-	# if [[ $flag=0 ]]; then
-	# 	echo "--- NO MATCH FOUND ---"
-	# fi
-
+    IFS=' '
 }
+
 
 addRecord() {
 	
@@ -108,13 +46,13 @@ addRecord() {
 
     record="${name}:${address}:${phone}:${email}"
 
-	echo "${record}" >> $DATABASEFILE
-
-	echo " --- Insert successful --- "
+    echo "${record}" >> $DATABASEFILE
+    echo " --- Insert successful --- "
 }
 
+
 updateRecord() {
-        SEARCH=' '
+        #SEARCH=''
 	echo "Enter the record you would like to update: "
 	read -r record
 	numFound=0
@@ -128,15 +66,14 @@ updateRecord() {
 			echo ''
 			echo "Error: Found multiple records. Cannot update."
                         echo "Try again with a more specific search."
-			numFound=1
+			return 1;
 
 		#no matches found
 		elif [ ${numFound} -eq 0 ]; then
 			echo ''
 			echo "Error: Record Not Found!"
-			numFound=1
-		
-		
+			return 1;
+		else 
 			#get line to be updated
 			LINE=$(grep -in "${record}" ${DATABASEFILE})
 			echo $LINE
@@ -156,13 +93,13 @@ updateRecord() {
 		echo "2. Address"
 		echo "3. Phone"
 		echo "4. Email"
-        echo "5. Done"
+                echo "5. Done"
 		read -r INPUT
 
 		case "$INPUT" in
 			"1" )
 				echo "Enter new name:"
-                read -r name
+			read -r name
 				;;
 			"2" )
 				echo "Enter new address:"
@@ -183,8 +120,7 @@ updateRecord() {
 				echo "Invalid Input"
 		esac
         	done
-		INPUT=' '
-
+		INPUT=''
 		#Delete the original entry
 		grep -v "${record}" ${DATABASEFILE} > temp && mv temp ${DATABASEFILE}
 
@@ -193,6 +129,7 @@ updateRecord() {
 		echo ''
 		echo " --- Record has been updated! --- "
 		numFound=1
+		IFS=' '
 	fi
 	done
 }
@@ -210,18 +147,18 @@ removeRecord() {
         grep -i "${remove}" ${DATABASEFILE}
         numRecords=''
     elif [ "$LINE" != "" ]; then
-        echo "The following record has been deleted: "
-        grep -i "${remove}" ${DATABASEFILE}
    	#delete line from the file
         grep -v "${remove}" ${DATABASEFILE} > temp && mv temp ${DATABASEFILE}
         echo " "
+        echo " --- Record has been deleted! --- "
+
     else
-        echo "The record cannot be found."
+        echo "Error: The record cannot be found."
     fi
 }
 
 displayData() {
-    echo " "
+        echo " "
 	cat ${DATABASEFILE}
 	echo " "
 }
@@ -259,7 +196,7 @@ case $option in
 		displayData
 	;;
 	f)
-		echo "Stopping"
+		echo "Exiting. Goodbye."
 		exit;;
 	*)
 		echo "Invalid choice. "
