@@ -1,4 +1,8 @@
 #! /bin/bash
+# Dylan Wagner
+# Tiffany Connors
+# Arthur Reeves
+# Matthew Learned
 
 DATABASEFILE="database.txt"
 
