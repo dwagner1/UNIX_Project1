@@ -5,6 +5,7 @@
 # Matthew Learned
 
 DATABASEFILE="database.txt"
+touch ${DATABASEFILE} #will create a new file if the one has 
 
 findRecord() {
 	echo "Enter the data to search for:"
